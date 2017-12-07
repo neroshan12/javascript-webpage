@@ -71,7 +71,7 @@ var scores, roundScore, activePlayer;
 
 scores = [0, 0];
 roundScore = 0;
-activePlayer = 1;
+activePlayer = 0;
 
 document.querySelector('.dice').style.display = 'none';
 
@@ -85,4 +85,27 @@ document.querySelector('.btn-roll').addEventListener('click', function() {
   var diceDOM = document.querySelector('.dice');
   diceDOM.style.display = 'block';
   diceDOM.src = 'dice-' + dice + '.png';
+
+  if (dice !== 1) {
+    // doesnt do type coercion. != does
+    //add score
+    roundScore += dice;
+    document.querySelector('#current-' + activePlayer).textContent = roundScore; // which player will get the content
+  } else {
+    // next player
+    activePlayer === 0 ? (activePlayer = 1) : (activePlayer = 0); // ternary operator
+    // if active player equals 0, set activePlayer to 1 else set activePlayer to 0
+    roundScore = 0; // need to set roundScore back to 0 if the player rolls a 1
+    document.getElementById('current-0').textContent = '0';
+    document.getElementById('current-1').textContent = '0';
+
+    document.querySelector('.player-0-panel').classList.toggle('active');
+    document.querySelector('.player-1-panel').classList.toggle('active');
+
+    // document.querySelector('.player-0-panel').classList.remove('active');
+    // document.querySelector('.player-1-panel').classList.add('active');
+    // toggle adds clas sif not there and if there it will remove
+    document.querySelector('.dice').style.display = 'none';
+  }
 });
+// in order to take the 'shading' off the player 1/2 you need to change actice from p1 rto p2 on player panel (l14)
