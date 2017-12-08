@@ -66,60 +66,140 @@
 // });
 
 //anonymous function - unamed function thus cannot be used outside that context
+//
+// var scores, roundScore, activePlayer;
+//
+// init();
+//
+// document.querySelector('.btn-roll').addEventListener('click', function() {
+//   var dice = Math.floor(Math.random() * 6) + 1;
+//   var diceDOM = document.querySelector('.dice');
+//   diceDOM.style.display = 'block';
+//   diceDOM.src = 'dice-' + dice + '.png';
+//
+//   if (dice !== 1) {
+//     // doesnt do type coercion. != does
+//     //add score
+//     roundScore += dice;
+//     document.querySelector('#current-' + activePlayer).textContent = roundScore; // which player will get the content
+//   } else {
+//     // // next player
+//     // activePlayer === 0 ? (activePlayer = 1) : (activePlayer = 0); // ternary operator
+//     // // if active player equals 0, set activePlayer to 1 else set activePlayer to 0
+//     // roundScore = 0; // need to set roundScore back to 0 if the player rolls a 1
+//     // document.getElementById('current-0').textContent = '0';
+//     // document.getElementById('current-1').textContent = '0';
+//     //
+//     // document.querySelector('.player-0-panel').classList.toggle('active');
+//     // document.querySelector('.player-1-panel').classList.toggle('active');
+//     //
+//     // // document.querySelector('.player-0-panel').classList.remove('active');
+//     // // document.querySelector('.player-1-panel').classList.add('active');
+//     // // toggle adds clas sif not there and if there it will remove
+//     // document.querySelector('.dice').style.display = 'none';
+//     nextPlayer();
+//   }
+// });
+// // in order to take the 'shading' off the player 1/2 you need to change actice from p1 rto p2 on player panel (l14)
+//
+// document.querySelector('.btn-hold').addEventListener('click', function() {
+//   // add current score to  global scores
+//   scores[activePlayer] += roundScore;
+//   // update the UI
+//   document.querySelector('#score-' + activePlayer).textContent =
+//     scores[activePlayer];
+//   // Check if player won the game
+//
+//   if (scores[activePlayer] >= 100) {
+//     document.querySelector('#name-' + activePlayer).textContent = 'Winner!';
+//     // document.querySelector('.dice').style.display = 'none'; // ideally should create class in css and toggle. hence why winner and active class exist in css
+//     document.querySelector('.player-' + activePlayer + '-panel').classList.add('winner');
+//     document
+//       .querySelector('.player-' + activePlayer + '-panel')
+//       .classList.remove('active');
+//   } else {
+//     // Next players
+//     nextPlayer();
+//   }
+// });
+//
+// function nextPlayer() {
+//   activePlayer === 0 ? (activePlayer = 1) : (activePlayer = 0);
+//   roundScore = 0;
+//   document.getElementById('current-0').textContent = '0';
+//   document.getElementById('current-1').textContent = '0';
+//
+//   document.querySelector('.player-0-panel').classList.toggle('active'); // toggle adds class if class isnt there and if there it removes it
+//   document.querySelector('.player-1-panel').classList.toggle('active');
+//
+//   document.querySelector('.dice').style.display = 'none';
+// }
+//
+// document.querySelector('.btn-new').addEventListener('click', init {
+// });
+//
+// function init() {
+//   scores = [0, 0];
+//   activePlayer = 0;
+//   roundScore = 0;
+//
+//   document.querySelector('.dice').style.display = 'none';
+//
+//   document.getElementById('score-0').textContent = '0';
+//   document.getElementById('score-1').textContent = '0';
+//   document.getElementById('current-0').textContent = '0';
+//   document.getElementById('current-1').textContent = '0';
+//   document.getElementById('name-0').textContent = 'Player 1';
+//   document.getElementById('name-1').textContent = 'Player 2'; // # for query selector
+//   document.querySelector('.player-0-panel').classList.remove('winner');
+//   document.querySelector('.player-1-panel').classList.remove('winner');
+//   document.querySelector('.player-0-panel').classList.remove('active');
+//   document.querySelector('.player-1-panel').classList.remove('active');
+//   document.querySelector('.player-0-panel').classlist.add('active');
+// }
 
-var scores, roundScore, activePlayer;
+// Final code
+
+var scores, roundScore, activePlayer, gamePlaying;
 
 init();
 
 document.querySelector('.btn-roll').addEventListener('click', function() {
-  var dice = Math.floor(Math.random() * 6) + 1;
-  var diceDOM = document.querySelector('.dice');
-  diceDOM.style.display = 'block';
-  diceDOM.src = 'dice-' + dice + '.png';
+  if (gamePlaying) {
+    var dice = Math.floor(Math.random() * 6) + 1;
+    var diceDOM = document.querySelector('.dice');
+    diceDOM.style.display = 'block';
+    diceDOM.src = 'dice-' + dice + '.png';
 
-  if (dice !== 1) {
-    // doesnt do type coercion. != does
-    //add score
-    roundScore += dice;
-    document.querySelector('#current-' + activePlayer).textContent = roundScore; // which player will get the content
-  } else {
-    // // next player
-    // activePlayer === 0 ? (activePlayer = 1) : (activePlayer = 0); // ternary operator
-    // // if active player equals 0, set activePlayer to 1 else set activePlayer to 0
-    // roundScore = 0; // need to set roundScore back to 0 if the player rolls a 1
-    // document.getElementById('current-0').textContent = '0';
-    // document.getElementById('current-1').textContent = '0';
-    //
-    // document.querySelector('.player-0-panel').classList.toggle('active');
-    // document.querySelector('.player-1-panel').classList.toggle('active');
-    //
-    // // document.querySelector('.player-0-panel').classList.remove('active');
-    // // document.querySelector('.player-1-panel').classList.add('active');
-    // // toggle adds clas sif not there and if there it will remove
-    // document.querySelector('.dice').style.display = 'none';
-    nextPlayer();
+    if (dice !== 1) {
+      roundScore += dice;
+      document.querySelector(
+        '#current-' + activePlayer
+      ).textContent = roundScore;
+      nextPlayer();
+    }
   }
 });
-// in order to take the 'shading' off the player 1/2 you need to change actice from p1 rto p2 on player panel (l14)
 
 document.querySelector('.btn-hold').addEventListener('click', function() {
-  // add current score to  global scores
-  scores[activePlayer] += roundScore;
-  // update the UI
-  document.querySelector('#score-' + activePlayer).textContent =
-    scores[activePlayer];
-  // Check if player won the game
+  if (gamePlaying) {
+    scores[activePlayer] += roundScore;
+    document.querySelector('#score-' + activePlayer).textContent =
+      scores[activePlayer];
 
-  if (scores[activePlayer] >= 100) {
-    document.querySelector('#name-' + activePlayer).textContent = 'Winner!';
-    // document.querySelector('.dice').style.display = 'none'; // ideally should create class in css and toggle. hence why winner and active class exist in css
-    document.querySelector('.player-' + activePlayer + '-panel').classList.add('winner');
-    document
-      .querySelector('.player-' + activePlayer + '-panel')
-      .classList.remove('active');
-  } else {
-    // Next players
-    nextPlayer();
+    if (scores[activePlayer] >= 100) {
+      document.querySelector('#name-' + activePlayer).textContent = 'Winner!';
+      docuemnt.querySelector('.dice').style.display = 'none';
+      document
+        .querySelector('.player-' + activePlayer + '-panel')
+        .classList.add('winner');
+      document
+        .querySelector('.player-' + activePlayer + '-panel')
+        .classList.remove('active');
+      gamePlaying = false;
+    } else {
+      nextPlayer();
+    }
   }
 });
 
@@ -128,29 +208,25 @@ function nextPlayer() {
   roundScore = 0;
   document.getElementById('current-0').textContent = '0';
   document.getElementById('current-1').textContent = '0';
-
-  document.querySelector('.player-0-panel').classList.toggle('active'); // toggle adds class if class isnt there and if there it removes it
-  document.querySelector('.player-1-panel').classList.toggle('active');
-
+  document.querySelector('.player-0-panel').classList.toggle('active');
   document.querySelector('.dice').style.display = 'none';
 }
 
-document.querySelector('.btn-new').addEventListener('click', init {
-});
+document.querySelector('.btn-new').addEventListener('click', init);
 
 function init() {
   scores = [0, 0];
   activePlayer = 0;
   roundScore = 0;
+  gamePlaying = true;
 
   document.querySelector('.dice').style.display = 'none';
-
   document.getElementById('score-0').textContent = '0';
   document.getElementById('score-1').textContent = '0';
   document.getElementById('current-0').textContent = '0';
   document.getElementById('current-1').textContent = '0';
   document.getElementById('name-0').textContent = 'Player 1';
-  document.getElementById('name-1').textContent = 'Player 2'; // # for query selector
+  document.getElementById('name-1').textContent = 'Player 2';
   document.querySelector('.player-0-panel').classList.remove('winner');
   document.querySelector('.player-1-panel').classList.remove('winner');
   document.querySelector('.player-0-panel').classList.remove('active');
